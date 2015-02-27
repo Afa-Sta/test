@@ -41,14 +41,17 @@
                     </form>
                 </td>
             </tr>
-        <?php foreach ($result as $k => $v){?>
+           
+        <?php if($result){
+            foreach ($result as $k => $v){?>
             <tr class="data">
                 <td><?php echo $v['name'];?></td>
                 <td><?php echo $v['type'];?></td>
                 <td><?php echo $v['size'];?></td>
             </tr>
-        <?php }?>
+        <?php }}?>
         </table>
+            <?php echo @$error;?>
         </div>
         
     </body>
