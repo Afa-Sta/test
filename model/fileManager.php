@@ -6,6 +6,7 @@ Class filemanager {
     private static $instance;
     private $dir;
     private $files;
+    private $error;
     
 
     private function __construct() {}
@@ -26,7 +27,7 @@ Class filemanager {
             $dir = ($last_letter == '/' || $last_letter =='\\') ? $dir : $dir.DIRECTORY_SEPARATOR;
         }
         $this->dir = $dir;
-        if(($handle = opendir($dir))){
+        if((@$handle = opendir($dir))){
             while (false !==($file = readdir($handle))) {
                 if($file != "." && $file != ".."){
                     if(filetype($dir.$file) == 'dir'){
@@ -48,8 +49,11 @@ Class filemanager {
                     
                 }  
             }
+            closedir($handle);
+        }else{
+            $this->error = 'Not directory';
         }
-        closedir($handle);
+        
         
     } 
     /*
@@ -68,6 +72,10 @@ Class filemanager {
     }
     public function getDir(){
         return $this->dir;
+    }
+    
+    public function getError(){
+        return $this->error;
     }
 
     
