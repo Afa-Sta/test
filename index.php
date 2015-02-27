@@ -13,10 +13,13 @@ Class indexController {
         $dir = filter_input(INPUT_GET, 'name_file');
         $files = filemanager::getInsatnce();
         $files->readAllFiles($dir);
-        $sort = filter_input(INPUT_POST, 'sort');
-        $result = $files->retrieveData($sort);
         $folder_open = $files->getDir();
-
+        $error = $files->getError();
+        if(!$error){
+            $sort = filter_input(INPUT_POST, 'sort');
+            $result = $files->retrieveData($sort);
+        }
+        
         include_once 'view.php';
 
     }
